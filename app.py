@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Depends, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from fastapi.security import OAuth2PasswordBearer
 from dotenv import load_dotenv
 
 import os
@@ -26,10 +26,7 @@ load_dotenv()
 
 API_TOKEN = os.getenv("API_TOKEN")
 
-token_auth_scheme = HTTPBearer()
-
-def verify_token(credentials: HTTPAuthorizationCredentials = Depends(token_auth_scheme)):
-    token = credentials.credentials
+def verify_token(token: str = Depends(OAuth2PasswordBearer(tokenUrl="token"))):
     if token != API_TOKEN:
         raise HTTPException(status_code=401, detail="Invalid Token")
 
