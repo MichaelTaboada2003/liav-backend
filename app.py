@@ -13,7 +13,7 @@ from microservices.product import router as product_router
 
 app = FastAPI()
 
-origins = ["*"]
+origins = ["https://d2m8x6scxtz7to.cloudfront.net"]
 
 app.add_middleware(
     CORSMiddleware,
